@@ -1,0 +1,15 @@
+flask==3.0.3
+opencv-python-headless==4.10.0.84
+numpy==1.26.4
+
+# Needed for zero-shot CLIP classification (recommended default -
+# no training required, see README.md). Falls back to the offline
+# heuristic automatically if these aren't installed or there's no
+# internet for the first-run model download.
+torch==2.3.1
+transformers==4.44.2
+
+# Needed only if you train/convert a real dedicated model (README.md
+# Section 2) - not required for CLIP or the heuristic fallback.
+onnxruntime==1.18.1
+torchvision==0.18.1

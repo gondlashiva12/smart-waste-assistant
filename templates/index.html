@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Waste Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>♻️ Smart Waste Assistant</h1>
+      <p class="tagline">Sort items correctly, and flag overflowing bins for GHMC.</p>
+      <div class="offline-badge">● Classification runs on-device</div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="scan">Scan Item</button>
+      <button class="tab-btn" data-tab="report">Report Bin</button>
+    </nav>
+
+    <main>
+      <!-- SCAN ITEM TAB -->
+      <section id="tab-scan" class="tab-panel active">
+        <details class="how-to">
+          <summary>ℹ️ How to use</summary>
+          <ol>
+            <li>Tap <strong>Start Camera</strong> below and allow camera access.</li>
+            <li>Point the camera at a single item (not a whole pile).</li>
+            <li>Tap <strong>Capture &amp; Classify</strong>.</li>
+            <li>Read the category, which bin to use, and the notes below it.</li>
+             <li>Throw item in that bin</li>
+            <li>Tap <strong>Stop Camera</strong> when you're done, to turn it off.</li>
+          </ol>
+        </details>
+
+        <p class="hint">Photograph a single item to find out which bin it belongs in.</p>
+
+        <div class="camera-box" id="scan-camera-box">
+          <video id="scan-video" autoplay playsinline></video>
+          <p class="camera-off-msg" id="scan-camera-off-msg">Camera is off</p>
+        </div>
+        <button id="scan-camera-toggle" class="primary-btn">▶️ Start Camera</button>
+        <button id="scan-capture-btn" class="primary-btn" disabled>📸 Capture &amp; Classify</button>
+        <canvas id="scan-canvas" hidden></canvas>
+
+        <div class="panel result" id="scan-result" hidden>
+          <h2 id="scan-category"></h2>
+          <p class="sub-category" id="scan-sub-category"></p>
+
+          <div class="info-row">
+            <span class="info-label">Bin:</span>
+            <span id="scan-bin"></span>
+          </div>
+
+          <p id="scan-description"></p>
+
+          <div class="separations" id="scan-separations-wrap">
+            <span class="info-label">Before you dispose of it:</span>
+            <ul id="scan-separations"></ul>
+          </div>
+
+          <div class="impact">
+            <span class="info-label">Illustrative environmental impact of proper disposal:</span>
+            <div class="impact-bar">
+              <div class="impact-positive" id="scan-impact-positive"></div>
+              <div class="impact-negative" id="scan-impact-negative"></div>
+            </div>
+            <div class="impact-legend">
+              <span class="legend-positive" id="scan-impact-positive-label"></span>
+              <span class="legend-negative" id="scan-impact-negative-label"></span>
+            </div>
+            <p class="impact-note">Indicative estimate for awareness, not a measured statistic.</p>
+          </div>
+
+          <p class="explanation" id="scan-explanation"></p>
+
+          <p class="confidence" id="scan-confidence"></p>
+        </div>
+
+        <div class="panel error" id="scan-error" hidden></div>
+      </section>
+
+      <!-- REPORT BIN TAB -->
+      <section id="tab-report" class="tab-panel">
+        <details class="how-to">
+          <summary>ℹ️ How to use</summary>
+          <ol>
+            <li>Tap <strong>Start Camera</strong> below and allow camera access.</li>
+            <li>Point the camera at a public bin or street area.</li>
+            <li>Tap <strong>Capture &amp; Check</strong>.</li>
+            <li>If it's flagged as moderate/overflowing, tap <strong>Save Photo</strong> to keep the image.</li>
+            <li>Tap <strong>Report to GHMC via WhatsApp</strong> - this opens WhatsApp with the details pre-filled.</li>
+            <li>Attach the saved photo in WhatsApp yourself, then hit send.</li>
+            <li>Tap <strong>Stop Camera</strong> when you're done, to turn it off.</li>
+          </ol>
+        </details>
+
+        <p class="hint">Photograph a public bin or street area to check its condition.</p>
+
+        <div class="camera-box" id="report-camera-box">
+          <video id="report-video" autoplay playsinline></video>
+          <p class="camera-off-msg" id="report-camera-off-msg">Camera is off</p>
+        </div>
+        <button id="report-camera-toggle" class="primary-btn">▶️ Start Camera</button>
+        <button id="report-capture-btn" class="primary-btn" disabled>📸 Capture &amp; Check</button>
+        <canvas id="report-canvas" hidden></canvas>
+
+        <div class="panel result" id="report-result" hidden>
+          <h2 id="report-state"></h2>
+          <p class="confidence" id="report-confidence"></p>
+          <a id="download-photo-link" class="secondary-btn" hidden download="bin-report.jpg">
+            💾 Save Photo (attach this in WhatsApp)
+          </a>
+          <button id="ghmc-report-btn" class="secondary-btn" hidden>
+            📤 Report to GHMC via WhatsApp
+          </button>
+        </div>
+
+        <div class="panel error" id="report-error" hidden></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Prototype for Snapdragon® AI Lab Build &amp; Present Challenge. Classifications are indicative, not certified.</p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='report.js') }}"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
